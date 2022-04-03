@@ -6,7 +6,6 @@
 
 <script>
 import RegistrationForm from './components/RegistrationForm.vue'
-
 export default {
   name: 'App',
   components: {
@@ -19,7 +18,7 @@ export default {
 <style lang="sass">
 #app
   font-family: Avenir, Helvetica, Arial, sans-serif
-  font-size: 14px
+  font-size: 12px
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: left

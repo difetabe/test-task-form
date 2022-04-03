@@ -1,203 +1,301 @@
 <template>
-  <div class="form-wrapper">
+  <div class="wrapper_form">
     <h1>Регистрация нового клиента.</h1>
-    <p>Заполните, пожалуйста, анкету</p>
-    <hr />
 
-    <div class="form">
-      <div class="form__item" :class="{ 'form-item_error': $v.name.$error }">
-        <label class="form__label" for="name"
-          ><span class="_error-color">*</span> Имя</label
-        >
-        <input id="name" class="form__input" v-model.trim="$v.name.$model" />
-        <div class="_error" v-if="!$v.name.required">
-          Поле обязательно к заполнению
-        </div>
-      </div>
-
-      <div class="form__item" :class="{ 'form-item_error': $v.surname.$error }">
-        <label class="form__label" for="surname"
-          ><span class="_error-color">*</span> Фамилия</label
-        >
+    <form>
+      <!-- Фамилия -->
+      <div class="form-item" :class="{ 'form-item_error': $v.surname.$error }">
+        <label class="form-item__label" for="surname">Фамилия клиента</label>
+        <p class="form-item__title">
+          <span class="important-lable">*</span> Фамилия
+        </p>
         <input
+          name="surname"
           id="surname"
-          class="form__input"
+          class="form-item__input"
           v-model.trim="$v.surname.$model"
         />
-
-        <div class="_error" v-if="!$v.surname.required">
+        <div class="error" v-if="!$v.surname.required">
           Поле обязательно к заполнению
         </div>
       </div>
-
-      <div class="form__item">
-        <label class="form__label" for="patronymic">Отчество</label>
-        <input id="patronymic" class="form__input" />
-      </div>
-
-      <div class="form__item">
-        <div class="gender">
-          <label for="male" />
-          <input class="" id="male" type="radio" value="male" data-once />м
-          <label for="female" />
-          <input class="" id="female" type="radio" value="female" data-once />ж
+      <!-- Имя -->
+      <div class="form-item" :class="{ 'form-item_error': $v.name.$error }">
+        <label class="form-item__label" for="name">Имя клиента</label>
+        <p class="form-item__title">
+          <span class="important-lable">*</span> Имя
+        </p>
+        <input
+          name="name"
+          id="name"
+          class="form-item__input"
+          v-model.trim="$v.name.$model"
+        />
+        <div class="error" v-if="!$v.surname.required">
+          Поле обязательно к заполнению
         </div>
-        <div class="form__item">Дата рождения</div>
       </div>
-
+      <!-- Отчество -->
+      <div class="form-item">
+        <label class="form-item__label" for="patronymic">Отчество</label>
+        <p class="form-item__title">Отчество</p>
+        <input id="patronymic" class="form-item__input" />
+      </div>
+      <!-- Дата рождения -->
       <div
-        class="form__item phoneNumber"
+        class="form-item"
+        :class="{ 'form-item_error': $v.birthDate.$error }"
+      >
+        <label class="form-item__label" for="birthDate">Дата рождения</label>
+        <p class="form-item__title">
+          <span class="important-lable">*</span> Дата рождения
+        </p>
+        <input
+          id="birthDate"
+          name="birthDate"
+          type="date"
+          v-model="$v.birthDate.$model"
+        />
+        <div class="error" v-if="!$v.birthDate.required">
+          Укажите дату рождения
+        </div>
+      </div>
+      <!-- Номер телефона -->
+      <div
+        class="form-item"
         :class="{ 'form-item_error': $v.phoneNumber.$error }"
       >
-        <label class="form__label" for="phoneNumber"
-          ><span class="_error-color">*</span> Номер телефона</label
+        <label class="form-item__label" for="phoneNumber"
+          >Контактный номер</label
         >
+        <p class="form-item__title">
+          <span class="important-lable">*</span> Номер телефона
+        </p>
         <input
           id="phoneNumber"
-          class="form__input"
-          v-model.trim="$v.phoneNumber.$model"
+          class="form-item__input"
+          placeholder="7-(000)-(000)-(00)-(00)"
+          v-model="$v.phoneNumber.$model"
         />
-        <div class="_error" v-if="!$v.phoneNumber.required">
+        <div class="error" v-if="!$v.phoneNumber.required">
           Поле обязательно к заполнению
         </div>
-        <div class="_error" v-if="!$v.phoneNumber.numeric">
-          Не корректные данные
+        <div class="error" v-if="!$v.phoneNumber.numeric">
+          Поле должно содержать номер телефона
+        </div>
+        <div class="error" v-if="!$v.phoneNumber.minLength">
+          Поле должно содержать 11 цифр
+        </div>
+        <div class="error" v-if="!$v.phoneNumber.correctNumber">
+          Номер должен начинатся с "7"
         </div>
       </div>
+      <!-- Пол -->
+      <div class="form-item" :class="{ 'form-item_error': $v.gender.$error }">
+        <p class="form-item__title">Укажите пол клиента</p>
 
-      <!-- Сделаем тут multiселектор -->
-      <!-- при клике на один из вариантов span="placeholder" становится невидим, а выбранный элемент отображается в строке-->
-      <div class="form__item select">
-        <label for="clientsGroup" class="select__label">Группа клиентов</label>
+        <label class="" for="male">м</label>
+        <input
+          type="radio"
+          id="male"
+          name="genderMale"
+          value="male"
+          v-model="$v.gender.$model"
+        />
 
-        <div class="select__wrapper">
-          <div class="select__input select__input_default">
-            <span class="placeholder">Выберите группу</span>
-            <div>VIP <button class="select__delete-button"></button></div>
-            <div>
-              Проблемные <button class="select__delete-button"></button>
-            </div>
-            <div>ОМС <button class="select__delete-button"></button></div>
-          </div>
-          <ul class="variants">
-            <li class="variants__item">VIP</li>
-            <li class="variants__item">Проблемные</li>
-            <li class="variants__item">ОМС</li>
-          </ul>
-        </div>
+        <label class="" for="female">ж</label>
+        <input
+          type="radio"
+          id="female"
+          name="genferFemale"
+          value="female"
+          v-model="$v.gender.$model"
+        />
       </div>
-
-      <!-- <label>Лечащий врач</label>
-        <select>
-          <option value="">Иванов</option>
-          <option value="male">Захаров</option>
-          <option value="female">Чернышева</option>
+      <!-- Группа клиентов -->
+      <div
+        class="form-item"
+        :class="{ 'form-item_error': $v.clientGroup.$error }"
+      >
+        <label id="clientGroup" />
+        <p class="form-item__title">
+          <span class="important-lable">*</span> Группа клиентов
+        </p>
+        <select class="form-item__input" size="1" v-model="$v.clientGroup.$model" id="clientGroup" multiple>
+          <option value="" disabled>Укажите группу клиентов</option>
+          <option value="VIP">VIP</option>
+          <option value="Проблемные">Проблемные</option>
+          <option value="ОМС">ОМС</option>
         </select>
-         -->
-
-      <!--  -->
-
-      <!-- Сделаем тут select -->
-
-      <!-- <div class="form__item">
-        <div class="select__wrapper">
-          <label id="doctor" class="select__label">Лечащий врач</label>
-          <ul class="select__variants">
-            <li>
-              <input for="" type="radio" />
-            </li>
-            <li>
-              <input type="radio" />
-            </li>
-            <li>
-              <input type="radio" />
-            </li>
-          </ul>
-        </div>
-      </div> -->
-      <!--  -->
-      <div class="form__item">
-        <label for="sms">Не отправлять СМС</label>
-        <input id="sms" type="checkbox" />
+      </div>
+      <!-- Лечащий врач -->
+      <div class="form-item" :class="{ 'form-item_error': $v.doctor.$error }">
+        <label for="doctor" />
+        <p class="form-item__title">
+          <span class="important-lable">*</span>Укажите лечащего врача
+        </p>
+        <select class="form-item__input" id="doctor" v-model="$v.doctor.$model">
+          <option disabled value="">Лечащий врач</option>
+          <option value="VIP">Иванов</option>
+          <option value="Проблемные">Захаров</option>
+          <option value="ОМС">Чернышева</option>
+        </select>
+      </div>
+      <!-- Не отправлять смс -->
+      <div class="form-item">
+        <label class="form-item__label" for="sms">Не отправлять СМС</label>
+        Не отправлять СМС<input id="sms" type="checkbox" />
       </div>
       <hr />
 
       <h2>Адрес</h2>
-
-      <div class="form__item">
-        <label class="form__label" for="index">Индекс</label>
-        <input id="index" class="form__input" placeholder="" />
+      <!-- Индекс -->
+      <div class="form-item">
+        <label class="form-item__label" for="index">Индекс</label>
+        <p class="form-item__title">Индекс</p>
+        <input id="index" class="form-item__input" />
       </div>
-
-      <div class="form__item">
-        <label class="form__label" for="country">Страна</label>
-        <input id="country" class="form__input" placeholder="" />
+      <!-- Страна -->
+      <div class="form-item">
+        <label class="form-item__label" for="country">Страна</label>
+        <p class="form-item__title">Страна</p>
+        <input id="country" class="form-item__input" />
       </div>
-
-      <div class="form__item">
-        <label class="form__label" for="region">Область</label>
-        <input id="region" class="form__input" placeholder="" />
+      <!-- Область -->
+      <div class="form-item">
+        <label class="form-item__label" for="region">Область</label>
+        <p class="form-item__title">Область</p>
+        <input id="region" class="form-item__input" />
       </div>
-
-      <div class="form__item" :class="{ 'form-item_error': $v.city.$error }">
-        <label class="form__label" for="city"
-          ><span class="_error-color">*</span> Город</label
-        >
-        <input id="city" class="form__input" v-model.trim="$v.city.$model" />
-        <div class="_error" v-if="!$v.city.required">
+      <!-- Город * -->
+      <div class="form-item" :class="{ 'form-item_error': $v.city.$error }">
+        <label class="form-item__label" for="city">Город</label>
+        <p class="form-item__title">
+          <span class="_error-color">*</span> Город
+        </p>
+        <input
+          id="city"
+          class="form-item__input"
+          v-model.trim="$v.city.$model"
+        />
+        <div class="error" v-if="!$v.city.required">
           Поле обязательно к заполнению
         </div>
-        <div class="_error" v-if="!$v.city.alpha">
-          Поле должно содержать только буквы.
-        </div>
       </div>
-
-      <div class="form__item">
-        <label class="form__label" name="adress" id="street">Улица</label>
-        <input for="street" class="form__input" placeholder="" />
+      <!-- Улица -->
+      <div class="form-item">
+        <label class="form-item__label" name="adress" id="street">Улица</label>
+        <p class="form-item__title">Улица</p>
+        <input for="street" class="form-item__input" />
       </div>
-      <div class="form__item">
-        <label class="form__label" name="adress" id="house">Дом</label>
-        <input for="street" class="form__input" placeholder="" />
+      <!-- Дом -->
+      <div class="form-item">
+        <label class="form-item__label" name="adress" id="house">Дом</label>
+        <p class="form-item__title">Дом</p>
+        <input for="street" class="form-item__input" />
       </div>
 
       <hr />
 
       <h2>Паспорт</h2>
-
+      <!-- Тип документа (селектор: Паспорт, Свидетельство о рождении, Водительское удостоверение) -->
       <div
-        class="form__item"
-        :class="{ 'form-group_error': $v.issueDate.$error }"
+        class="form-item"
+        :class="{ 'form-item_error': $v.documentType.$error }"
       >
-        <label class="form__label" for="issueDate"
-          ><span class="_error-color">*</span> Дата выдачи</label
+        <p class="form-item__title">
+          <span class="important-lable">*</span>Документ, подтверждающий
+          личность
+        </p>
+        <select class="form-item__input" v-model="$v.documentType.$model">
+          <option value="" disabled>Тип документа</option>
+          <option value="Паспорт">Паспорт</option>
+          <option value="Свидетельство о рождении">
+            Свидетельство о рождении
+          </option>
+          <option value="Водительское удостоверение">
+            Водительское удостоверение
+          </option>
+        </select>
+        <div class="error" v-if="!$v.issueDate.required">
+          Поле обязательно к заполнению
+        </div>
+      </div>
+      <!-- Серия -->
+      <div class="form-item">
+        <label class="form-item__label" name="series" id="series">Серия</label>
+        <p class="form-item__title">Серия</p>
+        <input for="series" class="form-item__input" />
+      </div>
+      <!-- Номер -->
+      <div class="form-item">
+        <label class="form-item__label" name="number" id="number">Номер</label>
+        <p class="form-item__title">Номер</p>
+        <input for="number" class="form-item__input" />
+      </div>
+      <!-- Кем выдан -->
+      <div class="form-item">
+        <label class="form-item__label" name="issuedBy" id="issuedBy"
+          >Кем выдан</label
         >
+        <p class="form-item__title">Кем выдан</p>
+        <input for="issuedBy" class="form-item__input" />
+      </div>
+      <!-- Дата выдачи * -->
+      <div
+        class="form-item"
+        :class="{ 'form-item_error': $v.issueDate.$error }"
+      >
+        <label class="form-item__label" for="issueDate"></label>
+        <p><span class="important-lable">*</span>Дата выдачи</p>
         <input
           id="issueDate"
-          class="form__input"
+          class="form-item__input"
           v-model.trim="$v.issueDate.$model"
         />
-        <div class="_error" v-if="!$v.issueDate.required">
+        <div class="error" v-if="!$v.issueDate.required">
           Поле обязательно к заполнению
         </div>
       </div>
 
-      <button>Завершить регистрацию</button>
-    </div>
+      <div class="send">
+        <button
+          class="button"
+          type="submit"
+          :disabled="submitStatus === 'ERROR'"
+        >
+          Завершить регистрацию
+        </button>
+        {{ submitStatus }}
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import { required, numeric } from "vuelidate/lib/validators";
+import {
+  required,
+  numeric,
+  maxLength,
+  minLength,
+} from "vuelidate/lib/validators";
+
+const correctNumber = (value) => Number(value[0]) === 7;
 
 export default {
   data() {
     return {
       name: "",
       surname: "",
+      birthDate: "",
+      doctor: "",
+      clientGroup: [""],
       phoneNumber: "",
+      gender: "",
       city: "",
+      documentType: "",
       issueDate: "",
+      submitStatus: "",
     };
   },
 
@@ -208,9 +306,24 @@ export default {
     surname: {
       required,
     },
+    birthDate: {
+      required,
+    },
     phoneNumber: {
+      maxLength: maxLength(11),
+      minLength: minLength(11),
       required,
       numeric,
+      correctNumber,
+    },
+    gender: {
+      required,
+    },
+    clientGroup: {
+      required,
+    },
+    doctor: {
+      required,
     },
     city: {
       required,
@@ -218,87 +331,76 @@ export default {
     issueDate: {
       required,
     },
-    validationGroup: [""],
-  },
-
-  methods: {
-    submit() {
-      console.log("submit!");
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
-      } else {
-        // do your submit logic here
-        this.submitStatus = "PENDING";
-        setTimeout(() => {
-          this.submitStatus = "OK";
-        }, 500);
-      }
+    documentType: {
+      required,
     },
   },
+
+  methods: {},
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
-h2
+h1
+  font-size: 24px
   color: #999999
+h2
+  font-size: 16px
 
-.form-wrapper
+hr
+  height: 1px
+  background-color: #e6e6e6
+  border: none
+
+.wrapper_form
   box-sizing: border-box
-  max-width: 70%
+  width: 90%
+  max-width: 500px
   margin: 0 auto
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08)
   border-radius: 10px
   padding: 20px
+  justify-content: space-between
+  align-items: flex-end
 
-  .form
-    justify-content: space-between
-    align-items: flex-end
+  .form-item
+    width: 100%
+    margin-bottom: 20px
 
-    .form__item
-      position: relative
+    &__title
+      color: inherit
+      font-size: 12px
+      margin: 0
+
+    &__label
+      display: none
+
+    &__input
+      box-sizing: border-box
       width: 100%
-      margin-bottom: 20px
+      display: block
+      border: 1px solid #d9d9d9
+      padding: 0.7rem
+      border-radius: 5px
+      color: inherit
 
-      .form__label
+    &_error
+      color: #ff1a1a
+      position: relative
+
+      .form-item__input
+        outline: none
+        border-color: #ff1a1a
+
+      .error
         display: block
-        color: inherit
-        font-size: 12px
+        bottom: -15px
+        font-size: 10px
+        z-index: 2
 
-      .form__input
-        box-sizing: border-box
-        width: 100%
-        display: block
-        border: 1px solid #d9d9d9
-        padding: 0.7rem
-        border-radius: 5px
-        color: inherit
-
-._error
-  position: absolute
-  bottom: -15px
+.error
   display: none
-  font-size: 10px
-  z-index: 2
 
-.form-item_error
+.important-lable
   color: #ff1a1a
-
-  ._error
-    display: block
-
-._error-color
-  color: #ff1a1a
-
-._flex-row-wrap
-  display: flex
-  flex-wrap: wrap
-
-.select__variants
-  display: none
-
-.variants
-  display: none
-  position: absolute
 </style>
