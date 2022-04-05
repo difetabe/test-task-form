@@ -47,7 +47,7 @@
             placeholder="Отчество"
           />
         </div>
-        <div class="form-item flex-row">
+        <div class="form-item flex-row h-max-cont">
           <!-- Дата рождения -->
           <div
             class="form-item__birthDate _important-label"
@@ -611,19 +611,19 @@ hr
 
   .form-item
     position: relative
-    height: 5em
+    height: 85px
     width: 100%
     flex-basis: 270px
     flex-grow: 1
     &_doc-type-block
       width: 100%
     &__document-type
-      height: 5em
+      height: 85px
       flex-basis: 170px
       flex-grow: 1
 
     &__issue-date
-      height: 5em
+      height: 85px
       width: 49%
       flex-basis: 170px
       flex-grow: 1
@@ -638,11 +638,11 @@ hr
           bottom: -15px
           font-size: 10px
           z-index: 2
-          padding-left: 0.3em
+          padding-left: 5px
           color: $error-color
       .variants
         position: absolute
-        top: 3em
+        top: 55px
         background-color: #e7e4e4
         width: 100%
         display: flex
@@ -650,23 +650,32 @@ hr
         border-radius: 5px
         z-index: 2
         &>*
-          padding: 0.8em 1.3em
+          height: 54px
+          padding: 0 20px
+          display: flex
+          align-items: center
           &:hover
             background-color: #dbd6d6
         .selected
           background-color: $input-bg-focus
 
     &__birthDate
-      height: 5em
+      height: 85px
       flex-grow: 1
       width: 135px
+      @media (max-width: 390px)
+        width: 100%
+
     &__gender
-      height: 5em
+      height: 85px
       width: 70px
       flex-grow: 1
+      @media (max-width: 390px)
+        width: 100%
+
     &_sms
       padding: 0
-      font-size: 0.7rem
+      font-size: 0.7em
       line-height: 1.4
       width: max-content
       margin: 0
@@ -674,8 +683,8 @@ hr
 
     &__title
       position: absolute
-      top: -1.2rem
-      left: 0.3em
+      top: -22px
+      left: 5px
       color: inherit
       font-size: inherit
       opacity: 0.6
@@ -685,23 +694,20 @@ hr
       display: none
 
     &__input
+      display: flex
+      align-items: center
       font-size: inherit
       box-sizing: border-box
       display: inlin-block
       width: 100%
+      height: 54px
+      padding: 0 15px
       border: 1px solid transparent
-      padding: 0.8em 1.2em
       border-radius: 5px
       color: inherit
       background-color: $input-bg
       outline: none
-      margin-bottom: 0.3rem
-
-      &_select
-        padding: 0.75em 0.8em
-
-      &_birthDate
-        padding: 0.75rem 0.9rem
+      margin-bottom: 5px
 
       &:focus
         border-color: #ccc
@@ -725,7 +731,7 @@ hr
         bottom: -15px
         font-size: 10px
         z-index: 2
-        padding-left: 0.3em
+        padding-left: 5px
 
 .send
   display: flex
@@ -740,7 +746,7 @@ hr
     padding: 16px 24px
     background-color: $prime-color
     color: #fff
-    font-size: 1rem
+    font-size: 1em
     font-weight: 500
     &:hover
       background-color: #0066ff
@@ -785,12 +791,12 @@ hr
     left: 5px
     content: "*"
     z-index: 1
-    font-size: 1.3rem
+    font-size: 1.3em
     color: $prime-color
 
 .down-sfift-icon
   position: absolute
-  top: 1.1em
+  top: 20px
   right: 3px
   background-color: $input-bg
   z-index: 1
@@ -799,8 +805,15 @@ hr
   opacity: 0.6
   margin-top: 10px
   margin-bottom: 0
-  font-size: 0.8rem
+  font-size: 0.8em
 
 .f-prime-color
   color: $prime-color
+
+.h-max-cont
+  height: max-content !important
+
+  .wrapper_form-block
+    .form-item__gender
+      width: 100%
 </style>
