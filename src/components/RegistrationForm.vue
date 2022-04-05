@@ -47,9 +47,8 @@
             placeholder="Отчество"
           />
         </div>
-        <!-- Дата рождения -->
-        <!-- Пол -->
         <div class="form-item flex-row">
+          <!-- Дата рождения -->
           <div
             class="form-item__birthDate _important-label"
             :class="{ 'form-item_error': $v.birthDate.$error }"
@@ -68,14 +67,14 @@
               Укажите дату рождения
             </div>
           </div>
-
+          <!-- Пол -->
           <div
             class="form-item__gender _important-label"
             :class="{ 'selected-in-input': $v.gender.$error }"
           >
             <label for="gender" />
             <select
-              class="form-item__input"
+              class="form-item__input form-item__input_select"
               id="gender"
               v-model="$v.gender.$model"
             >
@@ -131,7 +130,6 @@
           >
             <span class="opac-06">Группа клиентов:</span>
             {{ clientGroup.join(", ") }}
-            <!-- join метод для массива переводит массив в строку ("") - разделитель-->
             <svg
               class="down-sfift-icon"
               id="svg1025"
@@ -170,8 +168,6 @@
             </svg>
           </div>
           <div class="variants" v-if="showDropdown">
-            <!-- "v-if" - словие. блок будет отображаться только если выражение возвращает true. -->
-            <!-- @click - сокращение v-on. подписчик события -->
             <div
               @click="onAddClientGroup($event, 'VIP')"
               :class="{
@@ -205,7 +201,7 @@
           :class="{ 'selected-in-input': $v.doctor.$error }"
         >
           <select
-            class="form-item__input"
+            class="form-item__input form-item__input_select"
             id="doctor"
             v-model="$v.doctor.$model"
           >
@@ -334,7 +330,7 @@
       <div class="wrapper_form-block flex-row">
         <h2>Паспорт</h2>
         <hr />
-        
+
         <div class="form-item_doc-type-block flex-row">
           <!-- Тип документа -->
           <div
@@ -343,7 +339,7 @@
           >
             <label for="documentType" />
             <select
-              class="form-item__input"
+              class="form-item__input form-item__input_select"
               id="documentType"
               v-model="$v.documentType.$model"
             >
@@ -425,6 +421,7 @@
           />
         </div>
 
+        <!-- Кнопка -->
         <div class="send">
           <button
             type="button"
@@ -455,8 +452,8 @@ import {
   minLength,
 } from "vuelidate/lib/validators";
 
-const correctNumber = (value) => Number(value[0]) === 7; // Number? функция для валидатора
-const arrNotEmpty = (arr) => arr.length > 0; //функция для валидатора
+const correctNumber = (value) => Number(value[0]) === 7;
+const arrNotEmpty = (arr) => arr.length > 0;
 
 export default {
   data() {
@@ -475,17 +472,13 @@ export default {
     };
   },
   mounted() {
-    //
-    //
     document.addEventListener("click", (e) => {
       this.showDropdown = false;
     });
   },
   computed: {
-    //
     disableButton() {
       return this.$v.validationGroup.$invalid;
-      //возвращается тру или фолс если ошибки нет или есть
     },
   },
 
@@ -538,15 +531,14 @@ export default {
     },
   },
   methods: {
-    //
     success() {
       alert("Новый клиент успешно зарегестрирован!!!!");
     },
 
     onAddClientGroup(e, val) {
-      e.stopPropagation(); //
-      e.preventDefault(); //
-      this.$v.clientGroup.$touch(); //
+      e.stopPropagation();
+      e.preventDefault();
+      this.$v.clientGroup.$touch();
 
       const ind = this.clientGroup.findIndex((item) => val == item);
 
@@ -666,8 +658,8 @@ hr
 
     &__birthDate
       height: 5em
-      width: 120px
       flex-grow: 1
+      width: 135px
     &__gender
       height: 5em
       width: 70px
@@ -698,15 +690,18 @@ hr
       display: inlin-block
       width: 100%
       border: 1px solid transparent
-      padding: 0.8em
+      padding: 0.8em 1.2em
       border-radius: 5px
       color: inherit
       background-color: $input-bg
       outline: none
       margin-bottom: 0.3rem
 
+      &_select
+        padding: 0.75em 0.8em
+
       &_birthDate
-        padding: 0.65rem 0.5rem
+        padding: 0.65rem 0.9rem
 
       &:focus
         border-color: #ccc
@@ -787,7 +782,7 @@ hr
   &::before
     position: absolute
     top: 2px
-    right: 5px
+    left: 5px
     content: "*"
     z-index: 1
     font-size: 1.3rem
