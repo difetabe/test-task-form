@@ -197,7 +197,7 @@
         </div>
         <!-- Лечащий врач -->
         <div
-          class="form-item"
+          class="form-item _important-label"
           :class="{ 'selected-in-input': $v.doctor.$error }"
         >
           <select
@@ -277,7 +277,7 @@
           <div class="error" v-if="!$v.phoneNumber.numeric">
             Поле должно содержать номер телефона
           </div>
-          <div class="error" v-if="!$v.phoneNumber.minLength">
+          <div class="error" v-if="!$v.phoneNumber.minLength || !$v.phoneNumber.maxLength" >
             Поле должно содержать 11 цифр
           </div>
           <div class="error" v-if="!$v.phoneNumber.correctNumber">
@@ -624,7 +624,6 @@ hr
 
     &__issue-date
       height: 85px
-      width: 49%
       flex-basis: 170px
       flex-grow: 1
 
@@ -668,7 +667,7 @@ hr
 
     &__gender
       height: 85px
-      width: 70px
+      width: 40px
       flex-grow: 1
       @media (max-width: 390px)
         width: 100%
