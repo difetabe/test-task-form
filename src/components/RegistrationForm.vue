@@ -701,7 +701,7 @@ hr
         padding: 0.75em 0.8em
 
       &_birthDate
-        padding: 0.65rem 0.9rem
+        padding: 0.75rem 0.9rem
 
       &:focus
         border-color: #ccc
