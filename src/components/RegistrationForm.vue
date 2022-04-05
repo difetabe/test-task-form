@@ -1,272 +1,447 @@
 <template>
-  <div class="wrapper_form">
-    <h1>Регистрация нового клиента.</h1>
-
+  <div class="body">
     <form>
-      <!-- Фамилия -->
-      <div class="form-item" :class="{ 'form-item_error': $v.surname.$error }">
-        <label class="form-item__label" for="surname">Фамилия клиента</label>
-        <p class="form-item__title">
-          <span class="important-lable">*</span> Фамилия
+      <div class="wrapper_form-block flex-row">
+        <h1>Регистрация нового клиента.</h1>
+        <p class="comm-in-main-title">
+          Обязательно для заполнения <span class="f-prime-color">*</span>
         </p>
-        <input
-          name="surname"
-          id="surname"
-          class="form-item__input"
-          v-model.trim="$v.surname.$model"
-        />
-        <div class="error" v-if="!$v.surname.required">
-          Поле обязательно к заполнению
-        </div>
-      </div>
-      <!-- Имя -->
-      <div class="form-item" :class="{ 'form-item_error': $v.name.$error }">
-        <label class="form-item__label" for="name">Имя клиента</label>
-        <p class="form-item__title">
-          <span class="important-lable">*</span> Имя
-        </p>
-        <input
-          name="name"
-          id="name"
-          class="form-item__input"
-          v-model.trim="$v.name.$model"
-        />
-        <div class="error" v-if="!$v.surname.required">
-          Поле обязательно к заполнению
-        </div>
-      </div>
-      <!-- Отчество -->
-      <div class="form-item">
-        <label class="form-item__label" for="patronymic">Отчество</label>
-        <p class="form-item__title">Отчество</p>
-        <input id="patronymic" class="form-item__input" />
-      </div>
-      <!-- Дата рождения -->
-      <div
-        class="form-item"
-        :class="{ 'form-item_error': $v.birthDate.$error }"
-      >
-        <label class="form-item__label" for="birthDate">Дата рождения</label>
-        <p class="form-item__title">
-          <span class="important-lable">*</span> Дата рождения
-        </p>
-        <input
-          id="birthDate"
-          name="birthDate"
-          type="date"
-          v-model="$v.birthDate.$model"
-        />
-        <div class="error" v-if="!$v.birthDate.required">
-          Укажите дату рождения
-        </div>
-      </div>
-      <!-- Номер телефона -->
-      <div
-        class="form-item"
-        :class="{ 'form-item_error': $v.phoneNumber.$error }"
-      >
-        <label class="form-item__label" for="phoneNumber"
-          >Контактный номер</label
+        <hr />
+        <!-- Фамилия -->
+        <div
+          class="form-item _important-label"
+          :class="{ 'form-item_error': $v.surname.$error }"
         >
-        <p class="form-item__title">
-          <span class="important-lable">*</span> Номер телефона
-        </p>
-        <input
-          id="phoneNumber"
-          class="form-item__input"
-          placeholder="7-(000)-(000)-(00)-(00)"
-          v-model="$v.phoneNumber.$model"
-        />
-        <div class="error" v-if="!$v.phoneNumber.required">
-          Поле обязательно к заполнению
+          <input
+            placeholder="Фамилия"
+            name="surname"
+            id="surname"
+            class="form-item__input"
+            v-model.trim="$v.surname.$model"
+          />
+          <div class="error" v-if="!$v.surname.required">
+            Поле обязательно к заполнению
+          </div>
         </div>
-        <div class="error" v-if="!$v.phoneNumber.numeric">
-          Поле должно содержать номер телефона
-        </div>
-        <div class="error" v-if="!$v.phoneNumber.minLength">
-          Поле должно содержать 11 цифр
-        </div>
-        <div class="error" v-if="!$v.phoneNumber.correctNumber">
-          Номер должен начинатся с "7"
-        </div>
-      </div>
-      <!-- Пол -->
-      <div class="form-item" :class="{ 'form-item_error': $v.gender.$error }">
-        <p class="form-item__title">Укажите пол клиента</p>
-
-        <label class="" for="male">м</label>
-        <input
-          type="radio"
-          id="male"
-          name="genderMale"
-          value="male"
-          v-model="$v.gender.$model"
-        />
-
-        <label class="" for="female">ж</label>
-        <input
-          type="radio"
-          id="female"
-          name="genferFemale"
-          value="female"
-          v-model="$v.gender.$model"
-        />
-      </div>
-      <!-- Группа клиентов -->
-      <div
-        class="form-item"
-        :class="{ 'form-item_error': $v.clientGroup.$error }"
-      >
-        <label id="clientGroup" />
-        <p class="form-item__title">
-          <span class="important-lable">*</span> Группа клиентов
-        </p>
-        <select class="form-item__input" size="1" v-model="$v.clientGroup.$model" id="clientGroup" multiple>
-          <option value="" disabled>Укажите группу клиентов</option>
-          <option value="VIP">VIP</option>
-          <option value="Проблемные">Проблемные</option>
-          <option value="ОМС">ОМС</option>
-        </select>
-      </div>
-      <!-- Лечащий врач -->
-      <div class="form-item" :class="{ 'form-item_error': $v.doctor.$error }">
-        <label for="doctor" />
-        <p class="form-item__title">
-          <span class="important-lable">*</span>Укажите лечащего врача
-        </p>
-        <select class="form-item__input" id="doctor" v-model="$v.doctor.$model">
-          <option disabled value="">Лечащий врач</option>
-          <option value="VIP">Иванов</option>
-          <option value="Проблемные">Захаров</option>
-          <option value="ОМС">Чернышева</option>
-        </select>
-      </div>
-      <!-- Не отправлять смс -->
-      <div class="form-item">
-        <label class="form-item__label" for="sms">Не отправлять СМС</label>
-        Не отправлять СМС<input id="sms" type="checkbox" />
-      </div>
-      <hr />
-
-      <h2>Адрес</h2>
-      <!-- Индекс -->
-      <div class="form-item">
-        <label class="form-item__label" for="index">Индекс</label>
-        <p class="form-item__title">Индекс</p>
-        <input id="index" class="form-item__input" />
-      </div>
-      <!-- Страна -->
-      <div class="form-item">
-        <label class="form-item__label" for="country">Страна</label>
-        <p class="form-item__title">Страна</p>
-        <input id="country" class="form-item__input" />
-      </div>
-      <!-- Область -->
-      <div class="form-item">
-        <label class="form-item__label" for="region">Область</label>
-        <p class="form-item__title">Область</p>
-        <input id="region" class="form-item__input" />
-      </div>
-      <!-- Город * -->
-      <div class="form-item" :class="{ 'form-item_error': $v.city.$error }">
-        <label class="form-item__label" for="city">Город</label>
-        <p class="form-item__title">
-          <span class="_error-color">*</span> Город
-        </p>
-        <input
-          id="city"
-          class="form-item__input"
-          v-model.trim="$v.city.$model"
-        />
-        <div class="error" v-if="!$v.city.required">
-          Поле обязательно к заполнению
-        </div>
-      </div>
-      <!-- Улица -->
-      <div class="form-item">
-        <label class="form-item__label" name="adress" id="street">Улица</label>
-        <p class="form-item__title">Улица</p>
-        <input for="street" class="form-item__input" />
-      </div>
-      <!-- Дом -->
-      <div class="form-item">
-        <label class="form-item__label" name="adress" id="house">Дом</label>
-        <p class="form-item__title">Дом</p>
-        <input for="street" class="form-item__input" />
-      </div>
-
-      <hr />
-
-      <h2>Паспорт</h2>
-      <!-- Тип документа (селектор: Паспорт, Свидетельство о рождении, Водительское удостоверение) -->
-      <div
-        class="form-item"
-        :class="{ 'form-item_error': $v.documentType.$error }"
-      >
-        <p class="form-item__title">
-          <span class="important-lable">*</span>Документ, подтверждающий
-          личность
-        </p>
-        <select class="form-item__input" v-model="$v.documentType.$model">
-          <option value="" disabled>Тип документа</option>
-          <option value="Паспорт">Паспорт</option>
-          <option value="Свидетельство о рождении">
-            Свидетельство о рождении
-          </option>
-          <option value="Водительское удостоверение">
-            Водительское удостоверение
-          </option>
-        </select>
-        <div class="error" v-if="!$v.issueDate.required">
-          Поле обязательно к заполнению
-        </div>
-      </div>
-      <!-- Серия -->
-      <div class="form-item">
-        <label class="form-item__label" name="series" id="series">Серия</label>
-        <p class="form-item__title">Серия</p>
-        <input for="series" class="form-item__input" />
-      </div>
-      <!-- Номер -->
-      <div class="form-item">
-        <label class="form-item__label" name="number" id="number">Номер</label>
-        <p class="form-item__title">Номер</p>
-        <input for="number" class="form-item__input" />
-      </div>
-      <!-- Кем выдан -->
-      <div class="form-item">
-        <label class="form-item__label" name="issuedBy" id="issuedBy"
-          >Кем выдан</label
+        <!-- Имя -->
+        <div
+          class="form-item _important-label"
+          :class="{ 'form-item_error': $v.name.$error }"
         >
-        <p class="form-item__title">Кем выдан</p>
-        <input for="issuedBy" class="form-item__input" />
-      </div>
-      <!-- Дата выдачи * -->
-      <div
-        class="form-item"
-        :class="{ 'form-item_error': $v.issueDate.$error }"
-      >
-        <label class="form-item__label" for="issueDate"></label>
-        <p><span class="important-lable">*</span>Дата выдачи</p>
-        <input
-          id="issueDate"
-          class="form-item__input"
-          v-model.trim="$v.issueDate.$model"
-        />
-        <div class="error" v-if="!$v.issueDate.required">
-          Поле обязательно к заполнению
+          <input
+            placeholder="Имя"
+            name="name"
+            id="name"
+            class="form-item__input"
+            v-model.trim="$v.name.$model"
+          />
+          <div class="error" v-if="!$v.surname.required">
+            Поле обязательно к заполнению
+          </div>
+        </div>
+        <!-- Отчество -->
+        <div class="form-item">
+          <input
+            id="patronymic"
+            class="form-item__input"
+            placeholder="Отчество"
+          />
+        </div>
+        <!-- Дата рождения -->
+        <!-- Пол -->
+        <div class="form-item flex-row">
+          <div
+            class="form-item__birthDate _important-label"
+            :class="{ 'form-item_error': $v.birthDate.$error }"
+          >
+            <label class="form-item__label" for="birthDate"
+              >Дата рождения</label
+            >
+            <input
+              class="form-item__input form-item__input_birthDate"
+              id="birthDate"
+              name="birthDate"
+              type="date"
+              v-model="$v.birthDate.$model"
+            />
+            <div class="error" v-if="!$v.birthDate.required">
+              Укажите дату рождения
+            </div>
+          </div>
+
+          <div
+            class="form-item__gender _important-label"
+            :class="{ 'selected-in-input': $v.gender.$error }"
+          >
+            <label for="gender" />
+            <select
+              class="form-item__input"
+              id="gender"
+              v-model="$v.gender.$model"
+            >
+              <option disabled value="">Пол</option>
+              <option value="Мужчина">Муж</option>
+              <option value="Женщина">Жен</option>
+            </select>
+            <svg
+              disabled
+              class="down-sfift-icon"
+              id="svg1025"
+              version="1.1"
+              viewBox="0 0 19.05 19.050001"
+              width="15"
+              height="15"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+              xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+              xmlns:svg="http://www.w3.org/2000/svg"
+            >
+              <defs id="defs1022" />
+              <g id="layer1">
+                <path
+                  d="M 17.165845,5.6268585 9.5249964,13.423152 1.884155,5.6268631"
+                  id="path1927"
+                  style="
+                    font-variation-settings: normal;
+                    opacity: 1;
+                    fill: none;
+                    fill-opacity: 1;
+                    stroke: #808080;
+                    stroke-width: 0.5;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 4;
+                    stroke-dasharray: none;
+                    stroke-dashoffset: 0;
+                    stroke-opacity: 1;
+                    paint-order: markers fill stroke;
+                    stop-color: #000000;
+                  "
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <!-- Группа клиентов -->
+        <div class="form-item form-item_client-group _important-label">
+          <div
+            class="form-item__input"
+            :class="{ 'form-item_error': $v.clientGroup.$error }"
+            @click="onShowDropdown"
+          >
+            <span class="opac-06">Группа клиентов:</span>
+            {{ clientGroup.join(", ") }}
+            <!-- join метод для массива переводит массив в строку ("") - разделитель-->
+            <svg
+              class="down-sfift-icon"
+              id="svg1025"
+              version="1.1"
+              viewBox="0 0 19.05 19.050001"
+              width="15"
+              height="15"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+              xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+              xmlns:svg="http://www.w3.org/2000/svg"
+            >
+              <defs id="defs1022" />
+              <g id="layer1">
+                <path
+                  d="M 17.165845,5.6268585 9.5249964,13.423152 1.884155,5.6268631"
+                  id="path1927"
+                  style="
+                    font-variation-settings: normal;
+                    opacity: 1;
+                    fill: none;
+                    fill-opacity: 1;
+                    stroke: #808080;
+                    stroke-width: 0.5;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 4;
+                    stroke-dasharray: none;
+                    stroke-dashoffset: 0;
+                    stroke-opacity: 1;
+                    paint-order: markers fill stroke;
+                    stop-color: #000000;
+                  "
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="variants" v-if="showDropdown">
+            <!-- "v-if" - словие. блок будет отображаться только если выражение возвращает true. -->
+            <!-- @click - сокращение v-on. подписчик события -->
+            <div
+              @click="onAddClientGroup($event, 'VIP')"
+              :class="{
+                selected: isSelected('VIP'),
+              }"
+            >
+              VIP
+            </div>
+            <div
+              @click="onAddClientGroup($event, 'Проблемные')"
+              :class="{
+                selected: isSelected('Проблемные'),
+              }"
+            >
+              Проблемные
+            </div>
+            <div
+              @click="onAddClientGroup($event, 'ОМС')"
+              :class="{
+                selected: isSelected('ОМС'),
+              }"
+            >
+              ОМС
+            </div>
+          </div>
+          <div class="error" v-if="$v.clientGroup.$error">Укажите группу</div>
+        </div>
+        <!-- Лечащий врач -->
+        <div
+          class="form-item"
+          :class="{ 'selected-in-input': $v.doctor.$error }"
+        >
+          <select
+            class="form-item__input"
+            id="doctor"
+            v-model="$v.doctor.$model"
+          >
+            <option disabled value="">Лечащий врач</option>
+            <option value="VIP">Иванов</option>
+            <option value="Проблемные">Захаров</option>
+            <option value="ОМС">Чернышева</option>
+          </select>
+          <svg
+            disabled
+            class="down-sfift-icon"
+            id="svg1025"
+            version="1.1"
+            viewBox="0 0 19.05 19.050001"
+            width="15"
+            height="15"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+            xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+            xmlns:svg="http://www.w3.org/2000/svg"
+          >
+            <defs id="defs1022" />
+            <g id="layer1">
+              <path
+                d="M 17.165845,5.6268585 9.5249964,13.423152 1.884155,5.6268631"
+                id="path1927"
+                style="
+                  font-variation-settings: normal;
+                  opacity: 1;
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #808080;
+                  stroke-width: 0.5;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-miterlimit: 4;
+                  stroke-dasharray: none;
+                  stroke-dashoffset: 0;
+                  stroke-opacity: 1;
+                  paint-order: markers fill stroke;
+                  stop-color: #000000;
+                "
+              />
+            </g>
+          </svg>
+        </div>
+        <!-- Номер телефона -->
+        <div
+          class="form-item _important-label"
+          :class="{ 'form-item_error': $v.phoneNumber.$error }"
+        >
+          <p class="form-item__title">Контактный номер</p>
+          <!-- Для реализации красивой маски в поле ввода с не стираемой "7" в начале 
+        и паттерном ввода номера, необходимо использовать готовые сторонние бибилиотеки, 
+        либо писать большое количество условий и команд для исполнения, это долго и трудно для новичка,
+        а опытные разработчки, я думаю, вообще этим не занимаются, так как пользуются библиотеками.
+        Из-за того, что библиотеки было использовать нельзя, а написать такой код для меня в назначенное время невозможно, 
+        реализация может быть не совсем юзер френдли)
+        С библиотеками или за бОльшее время, сделала бы как положено) -->
+          <input
+            id="phoneNumber"
+            class="form-item__input"
+            placeholder="7XXXXXXXXXX"
+            v-model="$v.phoneNumber.$model"
+          />
+          <!-- Не отправлять смс -->
+          <div class="form-item_sms flex-row f-al-end">
+            <input id="sms" type="checkbox" />Не отправлять СМС
+          </div>
+          <div class="error" v-if="!$v.phoneNumber.required">
+            Поле обязательно к заполнению
+          </div>
+          <div class="error" v-if="!$v.phoneNumber.numeric">
+            Поле должно содержать номер телефона
+          </div>
+          <div class="error" v-if="!$v.phoneNumber.minLength">
+            Поле должно содержать 11 цифр
+          </div>
+          <div class="error" v-if="!$v.phoneNumber.correctNumber">
+            Номер должен начинатся с "7"
+          </div>
         </div>
       </div>
 
-      <div class="send">
-        <button
-          class="button"
-          type="submit"
-          :disabled="submitStatus === 'ERROR'"
+      <div class="wrapper_form-block flex-row">
+        <h2>Адрес</h2>
+        <hr />
+        <!-- Индекс -->
+        <div class="form-item">
+          <input id="index" class="form-item__input" placeholder="Индекс" />
+        </div>
+        <!-- Страна -->
+        <div class="form-item">
+          <input id="country" class="form-item__input" placeholder="Страна" />
+        </div>
+        <!-- Область -->
+        <div class="form-item">
+          <input id="region" class="form-item__input" placeholder="Область" />
+        </div>
+        <!-- Город * -->
+        <div
+          class="form-item _important-label"
+          :class="{ 'form-item_error': $v.city.$error }"
         >
-          Завершить регистрацию
-        </button>
-        {{ submitStatus }}
+          <input
+            placeholder="Город"
+            name="city"
+            id="city"
+            class="form-item__input"
+            v-model.trim="$v.city.$model"
+          />
+          <div class="error" v-if="!$v.city.required">
+            Поле обязательно к заполнению
+          </div>
+        </div>
+        <!-- Улица -->
+        <div class="form-item">
+          <input id="srteet" class="form-item__input" placeholder="Улица" />
+        </div>
+        <!-- Дом -->
+        <div class="form-item">
+          <input id="house" class="form-item__input" placeholder="Дом" />
+        </div>
+      </div>
+
+      <div class="wrapper_form-block flex-row">
+        <h2>Паспорт</h2>
+        <hr />
+        
+        <div class="form-item_doc-type-block flex-row">
+          <!-- Тип документа -->
+          <div
+            class="form-item__document-type _important-label"
+            :class="{ 'selected-in-input': $v.documentType.$error }"
+          >
+            <label for="documentType" />
+            <select
+              class="form-item__input"
+              id="documentType"
+              v-model="$v.documentType.$model"
+            >
+              <option disabled value="">Тип документа</option>
+              <option value="Паспорт">Паспорт</option>
+              <option value="Свид. о рождении">Свид. о рождении</option>
+              <option value="Вод. удостоверение">Вод. удостоверение</option>
+            </select>
+            <svg
+              disabled
+              class="down-sfift-icon"
+              id="svg1025"
+              version="1.1"
+              viewBox="0 0 19.05 19.050001"
+              width="15"
+              height="15"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+              xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+              xmlns:svg="http://www.w3.org/2000/svg"
+            >
+              <defs id="defs1022" />
+              <g id="layer1">
+                <path
+                  d="M 17.165845,5.6268585 9.5249964,13.423152 1.884155,5.6268631"
+                  id="path1927"
+                  style="
+                    font-variation-settings: normal;
+                    opacity: 1;
+                    fill: none;
+                    fill-opacity: 1;
+                    stroke: #808080;
+                    stroke-width: 0.5;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-miterlimit: 4;
+                    stroke-dasharray: none;
+                    stroke-dashoffset: 0;
+                    stroke-opacity: 1;
+                    paint-order: markers fill stroke;
+                    stop-color: #000000;
+                  "
+                />
+              </g>
+            </svg>
+          </div>
+          <!-- Дата выдачи -->
+          <div
+            class="form-item__issue-date _important-label"
+            :class="{ 'form-item_error': $v.issueDate.$error }"
+          >
+            <input
+              class="form-item__input form-item__input_birthDate"
+              id="issueDate"
+              name="issueDate"
+              type="date"
+              v-model="$v.issueDate.$model"
+            />
+            <div class="error" v-if="!$v.issueDate.required">
+              Укажите дату выдачи
+            </div>
+          </div>
+        </div>
+
+        <!-- Серия -->
+        <div class="form-item">
+          <input id="series" class="form-item__input" placeholder="Серия" />
+        </div>
+        <!-- Номер -->
+        <div class="form-item">
+          <input id="number" class="form-item__input" placeholder="Номер" />
+        </div>
+        <!-- Кем выдан -->
+        <div class="form-item">
+          <input
+            id="issuedBy"
+            class="form-item__input"
+            placeholder="Кем выдан"
+          />
+        </div>
+
+        <div class="send">
+          <button
+            type="button"
+            class="button"
+            :disabled="disableButton"
+            v-on:click="success"
+            :class="{ _disable: $v.validationGroup.$invalid }"
+          >
+            Завершить регистрацию
+          </button>
+          <div class="disable-button-comment" v-if="disableButton">
+            (Для завершения заполните все обязательные поля<span
+              class="f-prime-color"
+              >*</span
+            >)
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -280,7 +455,8 @@ import {
   minLength,
 } from "vuelidate/lib/validators";
 
-const correctNumber = (value) => Number(value[0]) === 7;
+const correctNumber = (value) => Number(value[0]) === 7; // Number? функция для валидатора
+const arrNotEmpty = (arr) => arr.length > 0; //функция для валидатора
 
 export default {
   data() {
@@ -289,17 +465,43 @@ export default {
       surname: "",
       birthDate: "",
       doctor: "",
-      clientGroup: [""],
+      clientGroup: [],
       phoneNumber: "",
       gender: "",
       city: "",
       documentType: "",
       issueDate: "",
-      submitStatus: "",
+      showDropdown: false,
     };
+  },
+  mounted() {
+    //
+    //
+    document.addEventListener("click", (e) => {
+      this.showDropdown = false;
+    });
+  },
+  computed: {
+    //
+    disableButton() {
+      return this.$v.validationGroup.$invalid;
+      //возвращается тру или фолс если ошибки нет или есть
+    },
   },
 
   validations: {
+    validationGroup: [
+      "name",
+      "surname",
+      "birthDate",
+      "phoneNumber",
+      "gender",
+      "clientGroup",
+      "doctor",
+      "city",
+      "issueDate",
+      "documentType",
+    ],
     name: {
       required,
     },
@@ -320,7 +522,7 @@ export default {
       required,
     },
     clientGroup: {
-      required,
+      arrNotEmpty,
     },
     doctor: {
       required,
@@ -335,72 +537,275 @@ export default {
       required,
     },
   },
+  methods: {
+    //
+    success() {
+      alert("Новый клиент успешно зарегестрирован!!!!");
+    },
 
-  methods: {},
+    onAddClientGroup(e, val) {
+      e.stopPropagation(); //
+      e.preventDefault(); //
+      this.$v.clientGroup.$touch(); //
+
+      const ind = this.clientGroup.findIndex((item) => val == item);
+
+      if (ind > 0 || ind == 0) {
+        this.clientGroup.splice(ind, 1);
+      } else {
+        this.clientGroup.push(val);
+      }
+    },
+
+    isSelected(val) {
+      return this.clientGroup.findIndex((item) => val == item) >= 0;
+    },
+
+    onShowDropdown(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.showDropdown = true;
+    },
+  },
 };
 </script>
 
 <style scoped lang="sass">
+$main-color: #404040
+$prime-color: #1a8cff
+$input-bg: #f3f2f2
+$input-bg-focus: #e6f0ff
+$error-color: #ff1a1a
+
+.border
+  border: 1px solid #fff
+
+.f-prime-color
+  color: $prime-color
+
+*
+  box-sizing: border-box
+
+.body
+  padding: 60px 0
+  font-family: 'Open Sans', Arial, sans-serif
+
 h1
-  font-size: 24px
-  color: #999999
+  margin: 16px 0 0
+  font-size: 32px
+
 h2
-  font-size: 16px
+  margin: 16px 0 0
+  font-size: 24px
 
 hr
   height: 1px
   background-color: #e6e6e6
   border: none
+  margin: 16px 0
+  width: 90%
 
-.wrapper_form
+.error
+  display: none
+
+.wrapper_form-block
   box-sizing: border-box
   width: 90%
-  max-width: 500px
-  margin: 0 auto
+  max-width: 600px
+  margin: 20px auto
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08)
   border-radius: 10px
-  padding: 20px
-  justify-content: space-between
-  align-items: flex-end
+  padding: 20px 20px 30px
 
   .form-item
+    position: relative
+    height: 5em
     width: 100%
-    margin-bottom: 20px
+    flex-basis: 270px
+    flex-grow: 1
+    &_doc-type-block
+      width: 100%
+    &__document-type
+      height: 5em
+      flex-basis: 170px
+      flex-grow: 1
+
+    &__issue-date
+      height: 5em
+      width: 49%
+      flex-basis: 170px
+      flex-grow: 1
+
+    &_client-group
+      flex-basis: 100%
+      .form-item_error
+        border-color: $error-color
+        color: $error-color
+        &~.error
+          display: block
+          bottom: -15px
+          font-size: 10px
+          z-index: 2
+          padding-left: 0.3em
+          color: $error-color
+      .variants
+        position: absolute
+        top: 3em
+        background-color: #e7e4e4
+        width: 100%
+        display: flex
+        flex-direction: column
+        border-radius: 5px
+        z-index: 2
+        &>*
+          padding: 0.8em 1.3em
+          &:hover
+            background-color: #dbd6d6
+        .selected
+          background-color: $input-bg-focus
+
+    &__birthDate
+      height: 5em
+      width: 120px
+      flex-grow: 1
+    &__gender
+      height: 5em
+      width: 70px
+      flex-grow: 1
+    &_sms
+      padding: 0
+      font-size: 0.7rem
+      line-height: 1.4
+      width: max-content
+      margin: 0
+      gap: 2px
 
     &__title
+      position: absolute
+      top: -1.2rem
+      left: 0.3em
       color: inherit
-      font-size: 12px
+      font-size: inherit
+      opacity: 0.6
       margin: 0
 
     &__label
       display: none
 
     &__input
+      font-size: inherit
       box-sizing: border-box
+      display: inlin-block
       width: 100%
-      display: block
-      border: 1px solid #d9d9d9
-      padding: 0.7rem
+      border: 1px solid transparent
+      padding: 0.8em
       border-radius: 5px
       color: inherit
+      background-color: $input-bg
+      outline: none
+      margin-bottom: 0.3rem
+
+      &_birthDate
+        padding: 0.65rem 0.5rem
+
+      &:focus
+        border-color: #ccc
+        background-color: $input-bg-focus
+
+        &+.down-sfift-icon
+          background-color: $input-bg-focus
 
     &_error
-      color: #ff1a1a
-      position: relative
+      color: $error-color
 
       .form-item__input
         outline: none
-        border-color: #ff1a1a
+        border-color: $error-color
+        &::placeholder
+          color: inherit
+          opacity: 0.8
 
       .error
         display: block
         bottom: -15px
         font-size: 10px
         z-index: 2
+        padding-left: 0.3em
 
-.error
+.send
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 100%
+  margin: 0 auto
+  text-align: center
+  .button
+    border: none
+    border-radius: 5px
+    padding: 16px 24px
+    background-color: $prime-color
+    color: #fff
+    font-size: 1rem
+    font-weight: 500
+    &:hover
+      background-color: #0066ff
+
+    &._disable
+      background-color: #ccc
+
+  .disable-button-comment
+    opacity: 0.6
+    margin-top: 16px
+.flex-row
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  align-items: flex-start
+  gap: 10px
+
+.flex-col
+  display: flex
+  flex-direction: column
+
+.f-no-wrap
+  flex-wrap: no-wrap
+.f-al-center
+  align-items: center
+.f-al-end
+  align-items: flex-end
+
+.sr-only
+  position: absolute
   display: none
+  z-index: -1
 
-.important-lable
-  color: #ff1a1a
+.opac-06
+  opacity: 0.6
+
+._important-label
+  position: relative
+  &::before
+    position: absolute
+    top: 2px
+    right: 5px
+    content: "*"
+    z-index: 1
+    font-size: 1.3rem
+    color: $prime-color
+
+.down-sfift-icon
+  position: absolute
+  top: 1.1em
+  right: 3px
+  background-color: $input-bg
+  z-index: 1
+
+.comm-in-main-title
+  opacity: 0.6
+  margin-top: 10px
+  margin-bottom: 0
+  font-size: 0.8rem
+
+.f-prime-color
+  color: $prime-color
 </style>

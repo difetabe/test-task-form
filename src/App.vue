@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app2">
     <RegistrationForm />
   </div>
 </template>
@@ -16,12 +16,15 @@ export default {
 </script>
 
 <style lang="sass">
-#app
-  font-family: Avenir, Helvetica, Arial, sans-serif
-  font-size: 12px
+$main-color: #404040
+
+#app2
+  font-family: 'Open Sans', Arial, sans-serif
+  font-size: 16px
+  font-weight: 500
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: left
-  color: #404040
-  margin-top: 60px
+  color: $main-color
+  overflow: hidden
 </style>
