@@ -53,6 +53,7 @@
             class="form-item__birthDate _important-label"
             :class="{ 'form-item_error': $v.birthDate.$error }"
           >
+          <p class="form-item__title">Дата рождения</p>
             <label class="form-item__label" for="birthDate"
               >Дата рождения</label
             >
@@ -391,6 +392,7 @@
             class="form-item__issue-date _important-label"
             :class="{ 'form-item_error': $v.issueDate.$error }"
           >
+          <p class="form-item__title">Дата выдачи</p>
             <input
               class="form-item__input form-item__input_birthDate"
               id="issueDate"
